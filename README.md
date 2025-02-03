@@ -1,2 +1,2 @@
 # githubtest
-My 1st Practice Repository 
+My Repo for Personal and Educational Projects
