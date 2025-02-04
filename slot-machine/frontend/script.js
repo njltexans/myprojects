@@ -3,7 +3,7 @@ document.getElementById("spin-button").addEventListener("click", function() {
     const balance = localStorage.getItem("balance") ? parseInt(localStorage.getItem("balance")) : 100;
     const lines = 3; // Default to 3 lines
 
-    fetch("http://127.0.0.1:5000/spin", {
+    fetch("https://myprojects-5ry5.onrender.com/spin", {  // <-- Replace with your Render backend URL
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -27,6 +27,10 @@ document.getElementById("spin-button").addEventListener("click", function() {
 
         document.getElementById("result").innerText = `You won $${data.winnings}`;
         localStorage.setItem("balance", data.new_balance);
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        document.getElementById("result").innerText = "Error connecting to server.";
     });
 });
 
