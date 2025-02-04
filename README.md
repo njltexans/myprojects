@@ -1,3 +1,3 @@
-# My Github Projects
-My Repo for Personal and Educational Projects
-Link to my Slot Machine Project: https://njltexans.github.io/myprojects/
+# My Slot Machine Project
+I built a slot machine frontend and backend (INSERT BETTER DESCRIPTION LATER) 
+Link: https://njltexans.github.io/myprojects/
