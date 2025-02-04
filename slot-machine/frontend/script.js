@@ -3,7 +3,7 @@ document.getElementById("spin-button").addEventListener("click", function() {
     const balance = localStorage.getItem("balance") ? parseInt(localStorage.getItem("balance")) : 100;
     const lines = 3; // Default to 3 lines
 
-    fetch("http://127.0.0.1:5000/spin", {
+    fetch("https://myprojects-5ry5.onrender.com/spin", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
