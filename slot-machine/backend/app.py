@@ -1,7 +1,10 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS  # ✅ Added CORS support to allow frontend requests
 import random
+import os
 
 app = Flask(__name__)
+CORS(app)  # ✅ Allow frontend (GitHub Pages) to call the API
 
 # Define slot machine parameters
 MAX_LINES = 3
@@ -80,14 +83,6 @@ def spin():
         "winning_lines": winning_lines,
         "new_balance": new_balance
     })
-
-if __name__ == "__main__":
-    app.run(debug=True)
-
-import os
-from flask import Flask, request, jsonify
-
-app = Flask(__name__)
 
 @app.route('/')
 def home():
