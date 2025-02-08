@@ -5,14 +5,8 @@ document.getElementById("spin-button").addEventListener("click", function() {
 
     fetch("https://myprojects-5ry5.onrender.com/spin", {  // Render URL
         method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            balance: balance,
-            lines: lines,
-            bet: bet
-        })
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ balance: balance, lines: lines, bet: bet })
     })
     .then(response => response.json())
     .then(data => {
@@ -21,10 +15,12 @@ document.getElementById("spin-button").addEventListener("click", function() {
             return;
         }
 
+        // Update reels display
         document.getElementById("reel1").innerText = data.reels[0][0];
         document.getElementById("reel2").innerText = data.reels[1][0];
         document.getElementById("reel3").innerText = data.reels[2][0];
 
+        // Update winnings and balance
         document.getElementById("result").innerText = `You won $${data.winnings}`;
         localStorage.setItem("balance", data.new_balance);
     })
@@ -33,4 +29,5 @@ document.getElementById("spin-button").addEventListener("click", function() {
         document.getElementById("result").innerText = "Error connecting to server.";
     });
 });
+
 
