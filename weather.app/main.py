@@ -1,5 +1,4 @@
-# Python Weather App that pulls in real time weather data from OpenWeatherMap API`
-# api key = c0ec6428dc15481477c2ea832bdc9b3f
+# Python Weather App that pulls in real time weather data from OpenWeatherMap API
 
 import sys
 import requests
@@ -12,7 +11,7 @@ class WeatherApp(QWidget):
         self.city_label = QLabel("Enter city name:", self)
         self.city_input = QLineEdit(self)
         self.get_weather_button = QPushButton("Get Weather", self)
-        self.temp_label = QLabel(self) 
+        self.temp_label = QLabel(self)
         self.emoji_label = QLabel(self)
         self.description_label = QLabel(self)
 
