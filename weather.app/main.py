@@ -1,6 +1,7 @@
 # Python Weather App that pulls in real time weather data from OpenWeatherMap API
 
 import sys
+import os
 import requests
 from PyQt5.QtWidgets import QApplication, QLabel, QLineEdit, QPushButton, QVBoxLayout, QWidget
 from PyQt5.QtCore import Qt
@@ -100,7 +101,9 @@ class WeatherApp(QWidget):
         self.get_weather_button.clicked.connect(self.get_weather)
 
     def get_weather(self):
-        api_key = "c0ec6428dc15481477c2ea832bdc9b3f"
+        api_key = os.getenv("WEATHER_API_KEY")
+        if not api_key:
+            raise ValueError("API key not found. Please set the WEATHER_API_KEY environment variable.")
         city = self.city_input.text()
         if not city:
             self.display_error("Please enter a city name.", emoji="⚠️")
@@ -202,5 +205,3 @@ if __name__ == '__main__':
     weather_app = WeatherApp()
     weather_app.show()
     sys.exit(app.exec_())
-
-
