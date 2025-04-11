@@ -11,6 +11,8 @@ class WeatherApp(QWidget):
         super().__init__()
         self.city_label = QLabel("Enter city name:", self)
         self.city_input = QLineEdit(self)
+        self.state_label = QLabel("Enter state (optional):", self)  # New label for state input
+        self.state_input = QLineEdit(self)  # New input field for state
         self.get_weather_button = QPushButton("Get Weather", self)
         self.temp_label = QLabel(self)
         self.emoji_label = QLabel(self)
@@ -23,6 +25,7 @@ class WeatherApp(QWidget):
 
         # Connect the "Enter" key press to the get_weather method
         self.city_input.returnPressed.connect(self.get_weather)
+        self.state_input.returnPressed.connect(self.get_weather)
 
     def initUI(self):
         self.setWindowTitle("Weather App")
@@ -33,6 +36,8 @@ class WeatherApp(QWidget):
         # Add widgets to the layout
         vbox.addWidget(self.city_label)
         vbox.addWidget(self.city_input)
+        vbox.addWidget(self.state_label)  # Add state label to layout
+        vbox.addWidget(self.state_input)  # Add state input to layout
         vbox.addWidget(self.get_weather_button)
         vbox.addWidget(self.temp_label)
         vbox.addWidget(self.emoji_label)
@@ -41,6 +46,8 @@ class WeatherApp(QWidget):
         # Center-align all widgets
         self.city_label.setAlignment(Qt.AlignCenter)  # Center-align the city label
         self.city_input.setAlignment(Qt.AlignCenter)
+        self.state_label.setAlignment(Qt.AlignCenter)
+        self.state_input.setAlignment(Qt.AlignCenter)
         self.temp_label.setAlignment(Qt.AlignCenter)
         self.emoji_label.setAlignment(Qt.AlignCenter)
         self.description_label.setAlignment(Qt.AlignCenter)
@@ -48,6 +55,8 @@ class WeatherApp(QWidget):
         # Set object names for labels
         self.city_label.setObjectName("city_label")
         self.city_input.setObjectName("city_input")
+        self.state_label.setObjectName("state_label")
+        self.state_input.setObjectName("state_input")
         self.temp_label.setObjectName("temp_label")
         self.description_label.setObjectName("description_label")
         self.emoji_label.setObjectName("emoji_label")
@@ -66,6 +75,14 @@ class WeatherApp(QWidget):
             }
             QLineEdit#city_input {
                 font-size: 30px;
+                padding: 10px;
+            }
+            QLabel#state_label {
+                font-size: 30px;
+                font-style: italic;
+            }
+            QLineEdit#state_input{
+                font-size: 20px;
                 padding: 10px;
             }
             QPushButton {
@@ -105,11 +122,15 @@ class WeatherApp(QWidget):
         if not api_key:
             raise ValueError("API key not found. Please set the WEATHER_API_KEY environment variable.")
         city = self.city_input.text()
+        state = self.state_input.text()  # Get the state input
+
         if not city:
             self.display_error("Please enter a city name.", emoji="⚠️")
             return
 
-        url = f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}"
+        # Include state in the API request if provided
+        location = f"{city},{state}" if state else city
+        url = f"https://api.openweathermap.org/data/2.5/weather?q={location}&appid={api_key}"
 
         try:
             response = requests.get(url)
@@ -121,7 +142,7 @@ class WeatherApp(QWidget):
 
         except requests.exceptions.HTTPError as http_error:
             if response.status_code == 404:
-                self.display_error("City not found", emoji="🌍")
+                self.display_error("City not found. Please specify the state if applicable.", emoji="🌍")
             elif response.status_code == 401:
                 self.display_error("Invalid API key", emoji="🔑")
             else:
