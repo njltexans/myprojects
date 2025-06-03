@@ -1,8 +1,7 @@
 [project]
 name = "aiagentproject"
 version = "0.1.0"
-description = "Add your description here"
-readme = "README.md"
+description = "This is a practice project I made where I build an AI agent that looks up the weather by connecting to openweather api and openai api"
 requires-python = ">=3.11"
 dependencies = [
     "langchain>=0.3.25",
